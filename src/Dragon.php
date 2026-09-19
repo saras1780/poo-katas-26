@@ -10,12 +10,20 @@ final class Dragon extends Monster
     /** Doit appeler le constructeur parent avec le nom "Dragon" et 30 points de vie. */
     public function __construct()
     {
-        throw new \LogicException('À implémenter');
+        parent::__construct('Dragon', 30);
     }
 
     /** Doit renvoyer 8 (valeur fixe, pour que les tests restent prévisibles). */
     public function attack(): int
     {
-        throw new \LogicException('À implémenter');
+        return 8;
+    }
+
+    public function __toString(): string
+    {
+        return 'Un dragon !' . parent::__toString();
     }
 }
+
+echo new Dragon(), PHP_EOL;
+echo new Goblin(), PHP_EOL;

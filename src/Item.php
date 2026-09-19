@@ -17,12 +17,14 @@ abstract class Item implements \Stringable
     public function __construct(
         public readonly string $name,
         public readonly float $weight,
-        public readonly Rarity $rarity = Rarity::Common,
     ) {
         if ($weight < 0) {
             throw new \InvalidArgumentException("Un poids n'est pas négatif, $weight reçu.");
         }
     }
+
+    /** Chaque type d'objet se décrit à sa façon : c'est aux sous-classes de l'écrire. */
+    abstract public function describe() : string;
 
     /** Doit renvoyer poids × multiplicateur de rareté (règle du jeu, arbitraire). Niveau 4. */
     public function value(): float
@@ -30,8 +32,6 @@ abstract class Item implements \Stringable
         throw new \LogicException('À implémenter');
     }
 
-    /** Chaque type d'objet se décrit à sa façon : c'est aux sous-classes de l'écrire. */
-    abstract public function describe(): string;
 
     /** Doit renvoyer la même chose que describe() : c'est le contrat Stringable. Niveau 4. */
     public function __toString(): string

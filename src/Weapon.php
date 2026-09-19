@@ -12,14 +12,18 @@ final class Weapon extends Item
         string $name,
         float $weight,
         public readonly int $damage,
-        Rarity $rarity = Rarity::Common,
     ) {
-        throw new \LogicException('À implémenter');
+        parent::__construct($name, $weight);
     }
 
     /** Doit renvoyer : "Épée courte : arme (2 kg, 5 dégâts)". */
     public function describe(): string
     {
-        throw new \LogicException('À implémenter');
+        return sprintf(
+            '%s : arme (%s kg, %d dégâts)',
+            $this->name,
+            $this->weight,
+            $this->damage,
+        );
     }
 }

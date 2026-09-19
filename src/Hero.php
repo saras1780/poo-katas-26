@@ -84,19 +84,20 @@ final class Hero implements Fighter
     /** Doit équiper l'arme passée en paramètre (elle remplace la précédente). Niveau 3. */
     public function equip(Weapon $weapon): void
     {
-        throw new \LogicException('À implémenter');
+        $this->weapon = $weapon;
     }
 
     /** Doit soigner le héros du montant de la potion, puis retirer la potion de l'inventaire. Niveau 3. */
     public function drink(Potion $potion): void
     {
-        throw new \LogicException('À implémenter');
+        $this->heal($potion->healing);
+        $this->inventory->remove($potion->name);
     }
 
     /** Doit renvoyer strength, plus les dégâts de l'arme équipée s'il y en a une. */
     public function attack(): int
     {
-        return $this->strength;
+        return $this->strength + ($this->weapon?->damage ?? 0);
     }
 
     /** Doit renvoyer "Arthur (7/10 PV)". */
@@ -104,4 +105,5 @@ final class Hero implements Fighter
     {
         return sprintf('%s (%d/%d PV)', $this->name, $this->hp, $this->maxHp);
     }
+
 }

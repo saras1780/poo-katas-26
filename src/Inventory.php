@@ -25,15 +25,17 @@ final class Inventory implements \Countable, \IteratorAggregate
      * Niveau 2 : si le poids dépasse maxWeight, ne rien ajouter et renvoyer false.
      * Niveau 3 : à la place du false, lever une InventoryFullException.
      */
-    public function add(Item $item): bool
+    public function add(Item $item): void
     {
         if ($this->totalWeight() + $item->weight > $this->maxWeight) {
-            return false;
-        }
+        throw new InventoryFullException(sprintf(
+            '"%s" ne rentre pas : le sac ne porte que %s kg.',
+            $item->name,
+            $this->maxWeight,
+        ));
+    }
 
-        $this->items[] = $item;
-
-        return true;
+    $this->items[] = $item;
     }
 
     /** Doit dire si un objet portant ce nom est dans le sac. */
