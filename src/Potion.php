@@ -28,6 +28,4 @@ final class Potion extends Item
     }
 }
 
-echo (new Weapon('Épée courte', 2.0, 5))->describe(), PHP_EOL;
-echo (new Potion('Potion de soin', 0.5, 5))->describe(), PHP_EOL;
 

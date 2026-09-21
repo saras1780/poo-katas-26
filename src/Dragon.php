@@ -25,5 +25,3 @@ final class Dragon extends Monster
     }
 }
 
-echo new Dragon(), PHP_EOL;
-echo new Goblin(), PHP_EOL;

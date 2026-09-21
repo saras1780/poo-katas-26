@@ -28,14 +28,14 @@ final class Inventory implements \Countable, \IteratorAggregate
     public function add(Item $item): void
     {
         if ($this->totalWeight() + $item->weight > $this->maxWeight) {
-        throw new InventoryFullException(sprintf(
-            '"%s" ne rentre pas : le sac ne porte que %s kg.',
-            $item->name,
-            $this->maxWeight,
-        ));
-    }
+            throw new InventoryFullException(sprintf(
+                '"%s" ne rentre pas : le sac ne porte que %s kg.',
+                $item->name,
+                $this->maxWeight,
+            ));
+        }
 
-    $this->items[] = $item;
+        $this->items[] = $item;
     }
 
     /** Doit dire si un objet portant ce nom est dans le sac. */
@@ -85,6 +85,6 @@ final class Inventory implements \Countable, \IteratorAggregate
      */
     public function getIterator(): \Traversable
     {
-        throw new \LogicException('À implémenter');
+        return new \ArrayIterator($this->items);
     }
 }

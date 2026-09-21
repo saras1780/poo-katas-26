@@ -13,25 +13,9 @@ namespace Dungeon;
  */
 final class Hero implements Fighter
 {
-    /** Le maximum de points de vie. Lecture publique, écriture réservée à la classe. Niveau 1. */
-    public private(set) int $maxHp = 0;
 
-    /**
-     * Les points de vie courants. Lecture publique, écriture réservée à la classe. Niveau 1.
-     * Chapitre Encapsulation : ajouter un hook `set` qui borne la valeur entre 0 et $maxHp,
-     * pour que takeDamage() et heal() n'aient plus à s'en soucier.
-     */
-    public private(set) int $hp = 0 {
-        set => max(0, min($this->maxHp, $value));
-    }
+    use HasHealth;
 
-    /**
-     * Propriété virtuelle (hook `get`, rien n'est stocké) : doit valoir true quand
-     * hp est égal à maxHp. Chapitre Encapsulation.
-     */
-    public bool $isFullHealth {
-        get => $this->hp === $this->maxHp;
-    }
 
     /** Le sac, créé dans le constructeur : composition. Jamais remplacé, donc readonly. Niveau 2. */
     public readonly Inventory $inventory;
@@ -61,24 +45,6 @@ final class Hero implements Fighter
         $this->maxHp = $maxHp;
         $this->hp = $maxHp;
         $this->inventory = new Inventory();
-    }
-
-    /** Doit retirer $amount points de vie, sans jamais descendre sous 0. */
-    public function takeDamage(int $amount): void
-    {
-        $this->hp = max(0, $this->hp - $amount);
-    }
-
-    /** Doit rendre $amount points de vie, sans jamais dépasser $maxHp. */
-    public function heal(int $amount): void
-    {
-        $this->hp = min($this->maxHp, $this->hp + $amount);
-    }
-
-    /** Doit renvoyer true tant qu'il reste au moins 1 point de vie. */
-    public function isAlive(): bool
-    {
-       return $this->hp > 0;
     }
 
     /** Doit équiper l'arme passée en paramètre (elle remplace la précédente). Niveau 3. */

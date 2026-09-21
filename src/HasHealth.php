@@ -14,4 +14,38 @@ namespace Dungeon;
  */
 trait HasHealth
 {
+    /** Le maximum de points de vie. */
+    public private(set) int $maxHp;
+
+    /** Les points de vie courants : le hook les garde entre 0 et $maxHp. */
+    public private(set) int $hp {
+        set => max(0, min($this->maxHp, $value));
+    }
+
+    public bool $isFullHealth {
+        get => $this->hp === $this->maxHp;
+    }
+
+    public function takeDamage(int $amount): void
+    {
+        if ($amount < 0) {
+            throw new \InvalidArgumentException("Un dégât ne peut pas être négatif, $amount reçu.");
+        }
+
+        $this->hp -= $amount;
+    }
+
+    public function heal(int $amount): void
+    {
+        if ($amount < 0) {
+            throw new \InvalidArgumentException("Un soin ne peut pas être négatif, $amount reçu.");
+        }
+
+        $this->hp += $amount;
+    }
+
+    public function isAlive(): bool
+    {
+        return $this->hp > 0;
+    }
 }
